@@ -1,0 +1,87 @@
+# Network Traffic Analysis with Wireshark
+
+**Author:** Matías Ordenes  
+**Date:** July 2025  
+**Tool used:** Wireshark  
+**Objective:** Capture and analyze network traffic in a home environment to identify commonly used protocols, connected devices, and potential security risks.
+
+---
+
+## 1. Capture Environment
+
+- Main device: Personal computer (Windows/Linux)
+- Network: Home Wi-Fi
+- Other connected devices: Android phone
+- Capture duration: 10 minutes
+- Generated traffic: Web browsing (Wikipedia, YouTube), AMD driver update
+
+📸 **[Image 1: Wireshark main capture screen]**
+
+---
+
+## 2. Observed Protocols
+
+Filtered traffic by protocol:
+
+- `dns`: domain name resolution (e.g., github.com, microsoft.com)
+- `http`: unencrypted traffic (only AMD driver downloads observed)
+- `tcp.port == 443`: encrypted HTTPS connections
+
+📸 **[Image 2: DNS filter applied showing domain queries]**  
+📸 **[Image 3: HTTP traffic detected – AMD driver request]**
+
+---
+
+## 3. Plain Text Data Review (HTTP)
+
+Using the `http` filter and "Follow HTTP stream", I reviewed the content of HTTP packets.  
+Only AMD driver update traffic was observed; no sensitive data like passwords or form submissions were found.
+
+🔒 **Conclusion:** Most network traffic used HTTPS, which ensures confidentiality and data protection.
+
+---
+
+## 4. Connected Devices Analysis
+
+Reviewed `Endpoints > IPv4` and MAC address tables to identify devices in the network.
+
+### Identified devices:
+
+| IP              | MAC Address           | Manufacturer                | Device                 |
+|-----------------|------------------------|------------------------------|-------------------------|
+| 192.168.0.1     | (Router MAC)           | TP-Link                      | Home router             |
+| 192.168.0.103   | 18:C0:4D:62:E2:18      | GIGA-BYTE TECHNOLOGY CO.     | Personal computer       |
+
+No unknown or unauthorized devices were detected.
+
+📸 **[Image 4: IPv4 endpoints table]**  
+📸 **[Image 5: MAC addresses with vendor lookup]**
+
+---
+
+## 5. External IP Review
+
+External communications were limited to trusted services:
+- GitHub
+- Microsoft
+- AMD
+
+No suspicious IP addresses were found. Checked with [AbuseIPDB](https://abuseipdb.com) and [MAC Vendors](https://macvendors.com).
+
+---
+
+## 6. Conclusions
+
+- The home network behaved as expected.
+- No intrusion attempts or malicious connections were found.
+- HTTPS encryption effectively protected sensitive data.
+- Wireshark proved to be a valuable tool to monitor traffic and understand how real networks work.
+
+---
+
+## 7. Key Learnings
+
+- Wireshark reveals real-time communication between devices on a network.
+- DNS and ARP traffic provide visibility into internal network structure.
+- Understanding protocol-level behavior helps identify and prevent security risks.
+- Even in normal conditions, it's possible to gather meaningful cybersecurity insights.
